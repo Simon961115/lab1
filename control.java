@@ -10,22 +10,11 @@ public class control {
         Car car = new Volvo240();
         car.startEngine();
 
-        System.out.println(car.getCurrentSpeed());
+        System.out.println(car.speedFactor());
 
-        for(int i = 0; i < 5;i++) {
-            car.incrementSpeed(0.7);
-            System.out.println(car.getCurrentSpeed());
-        }
-
-        System.out.println();
         car = new Saab95();
-        car.startEngine();
-        System.out.println(car.getCurrentSpeed());
 
-        for(int i = 0; i < 5;i++) {
-            car.incrementSpeed(0.7);
-            System.out.println(car.getCurrentSpeed());
-        }
+        System.out.println(car.speedFactor());
 
 
 
