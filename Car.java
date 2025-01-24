@@ -2,11 +2,11 @@ import java.awt.*;
 
 public abstract class Car {
 
-    private int nrDoors; // Number of doors on the car
-    private double enginePower; // Engine power of the car
+    private final int nrDoors; // Number of doors on the car
+    private final double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
-    private String modelName; // The car model name
+    private final String modelName; // The car model name
 
     public Car (int nDoors, Color color,double enginePower, String modelName) {
         this.nrDoors = nDoors;
@@ -48,10 +48,15 @@ public abstract class Car {
         this.currentSpeed = 0;
     }
 
+    public void incrementSpeed(double amount){
+        setCurrentSpeed(Math.min(getCurrentSpeed() + this.speedFactor() * amount,getEnginePower()));
+    }
+
+    public void decrementSpeed(double amount){
+        setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount,0));
+    }
+
     public abstract double speedFactor();
 
-    public abstract void incrementSpeed(double amount);
-
-    public abstract void decrementSpeed(double amount);
 
 }
