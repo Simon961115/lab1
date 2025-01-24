@@ -49,7 +49,7 @@ public abstract class Car {
     }
 
     public void incrementSpeed(double amount){
-        setCurrentSpeed(Math.min(getCurrentSpeed() + this.speedFactor() * amount,getEnginePower()));
+        setCurrentSpeed(Math.min(getCurrentSpeed() + speedFactor() * amount,getEnginePower()));
     }
 
     public void decrementSpeed(double amount){
