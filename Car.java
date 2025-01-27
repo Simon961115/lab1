@@ -92,6 +92,7 @@ public abstract class Car implements Movable {
             case EAST -> currentDirection = Directions.SOUTH;
             case WEST -> currentDirection = Directions.NORTH;
 
+
         }
 
     }
