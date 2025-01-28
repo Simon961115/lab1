@@ -34,7 +34,11 @@ public abstract class Car implements Movable {
     }
 
     public void setCurrentSpeed(double currentSpeed){
-        this.currentSpeed = currentSpeed;
+        if(currentSpeed <= 0){this.currentSpeed = 0;}
+        else if(currentSpeed >= this.enginePower){
+            this.currentSpeed = this.enginePower;
+        }
+        else this.currentSpeed = currentSpeed;
     }
 
     public Color getColor(){
@@ -59,6 +63,27 @@ public abstract class Car implements Movable {
 
     public void decrementSpeed(double amount){
         setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount,0));
+    }
+
+    public void gas(double amount){
+        if(amount <= 0) {
+            incrementSpeed(0);
+        }
+        else if (amount >= 1){
+            incrementSpeed(1);
+        }
+        else incrementSpeed(amount);
+    }
+
+    public void brake(double amount){
+        if(amount <= 0) {
+            decrementSpeed(0);
+        }
+        else if (amount >= 1){
+            decrementSpeed(1);
+        }
+        else decrementSpeed(amount);
+
     }
 
     public abstract double speedFactor();
