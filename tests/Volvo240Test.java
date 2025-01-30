@@ -23,15 +23,15 @@ class Volvo240Test {
         assertEquals(0.0, volvo.getCurrentSpeed());
     }
 
-    @Test
-    void setCurrentSpeed() {
-            volvo.setCurrentSpeed(10);
-            assertEquals(10, volvo.getCurrentSpeed());
-            volvo.setCurrentSpeed(101);
-            assertEquals(100, volvo.getCurrentSpeed());
-            volvo.setCurrentSpeed(-10);
-            assertEquals(0, volvo.getCurrentSpeed());
-    }
+//    @Test
+//    void setCurrentSpeed() {
+//            volvo.setCurrentSpeed(10);
+//            assertEquals(10, volvo.getCurrentSpeed());
+//            volvo.setCurrentSpeed(101);
+//            assertEquals(100, volvo.getCurrentSpeed());
+//            volvo.setCurrentSpeed(-10);
+//            assertEquals(0, volvo.getCurrentSpeed());
+//    }
 
     @Test
     void getColor() {
@@ -56,22 +56,22 @@ class Volvo240Test {
         assertEquals(0.0,volvo.getCurrentSpeed());
     }
 
-    @Test
-    void incrementSpeed() {
-        volvo.setCurrentSpeed(10);
-        volvo.incrementSpeed(0.5);
-        assertEquals(10.625, volvo.getCurrentSpeed());
-        volvo.setCurrentSpeed(10);
-        volvo.incrementSpeed(1);
-        assertEquals(11.25, volvo.getCurrentSpeed());
-    }
+//    @Test
+//    void incrementSpeed() {
+//        volvo.setCurrentSpeed(10);
+//        volvo.incrementSpeed(0.5);
+//        assertEquals(10.625, volvo.getCurrentSpeed());
+//        volvo.setCurrentSpeed(10);
+//        volvo.incrementSpeed(1);
+//        assertEquals(11.25, volvo.getCurrentSpeed());
+//    }
 
-    @Test
-    void decrementSpeed() {
-        volvo.setCurrentSpeed(10);
-        volvo.decrementSpeed(0.5);
-        assertEquals(9.375, volvo.getCurrentSpeed());
-    }
+//    @Test
+//    void decrementSpeed() {
+//        volvo.setCurrentSpeed(10);
+//        volvo.decrementSpeed(0.5);
+//        assertEquals(9.375, volvo.getCurrentSpeed());
+//    }
 
     @Test
     void move() {
@@ -83,20 +83,18 @@ class Volvo240Test {
 
     @Test
     void turnLeft() {
-        volvo.startEngine();
-        volvo.setCurrentSpeed(10);
+        volvo.gas(1);
         volvo.turnLeft();
         volvo.move();
-        assertEquals(-10, volvo.getX());
+        assertEquals(-1.25, volvo.getX());
         assertEquals(0, volvo.getY());
     }
     @Test
     void turnRight() {
-        volvo.startEngine();
-        volvo.setCurrentSpeed(10);
+        volvo.gas(1);
         volvo.turnRight();
         volvo.move();
-        assertEquals(10, volvo.getX());
+        assertEquals(1.25, volvo.getX());
         assertEquals(0, volvo.getY());
     }
 
@@ -117,28 +115,24 @@ class Volvo240Test {
 
     @Test
     void gas() {
-        volvo.setCurrentSpeed(10);
         volvo.gas(0);
-        assertEquals(10, volvo.getCurrentSpeed());
-        volvo.setCurrentSpeed(10);
+        assertEquals(0, volvo.getCurrentSpeed());
         volvo.gas(2);
-        assertEquals(11.25, volvo.getCurrentSpeed());
-        volvo.setCurrentSpeed(10);
+        assertEquals(1.25, volvo.getCurrentSpeed());
         volvo.gas(0.5);
-        assertEquals(10.625, volvo.getCurrentSpeed());
+        assertEquals(1.875, volvo.getCurrentSpeed());
 
     }
 
     @Test
     void brake() {
-        volvo.setCurrentSpeed(10);
         volvo.brake(0);
-        assertEquals(10, volvo.getCurrentSpeed());
-        volvo.setCurrentSpeed(10);
+        assertEquals(0, volvo.getCurrentSpeed());
+        volvo.gas(1);
         volvo.brake(2);
-        assertEquals(8.75, volvo.getCurrentSpeed());
-        volvo.setCurrentSpeed(10);
+        assertEquals(0, volvo.getCurrentSpeed());
+        volvo.gas(10);
         volvo.brake(0.5);
-        assertEquals(9.375, volvo.getCurrentSpeed());
+        assertEquals(0.625, volvo.getCurrentSpeed());
     }
 }

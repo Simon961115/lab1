@@ -8,7 +8,7 @@ public class Volvo240 extends Car{
         super(4, Color.black, 100, "Volvo240");
     }
 
-    @Override
+    @Override //Accelarations varibel specifik för Volvo
     public double speedFactor(){
         return getEnginePower() * 0.01 * trimFactor;
     }

@@ -33,7 +33,7 @@ public abstract class Car implements Movable {
         return currentSpeed;
     }
 
-    public void setCurrentSpeed(double currentSpeed){
+    private void setCurrentSpeed(double currentSpeed){
         if(currentSpeed <= 0){this.currentSpeed = 0;}
         else if(currentSpeed >= this.enginePower){
             this.currentSpeed = this.enginePower;
@@ -57,15 +57,15 @@ public abstract class Car implements Movable {
         this.currentSpeed = 0;
     }
 
-    public void incrementSpeed(double amount){
+    private void incrementSpeed(double amount){ //Används endast av gas
         setCurrentSpeed(Math.min(getCurrentSpeed() + speedFactor() * amount,getEnginePower()));
     }
 
-    public void decrementSpeed(double amount){
+    private void decrementSpeed(double amount){ //Används endast av brake
         setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount,0));
     }
 
-    public void gas(double amount){
+    public void gas(double amount){ //Ger fart, inom värdet 0-1 så att gas inte bromsar
         if(amount <= 0) {
             incrementSpeed(0);
         }
@@ -75,7 +75,7 @@ public abstract class Car implements Movable {
         else incrementSpeed(amount);
     }
 
-    public void brake(double amount){
+    public void brake(double amount){ //Saktar ner farten, håller sig inom 0-1.
         if(amount <= 0) {
             decrementSpeed(0);
         }
@@ -86,10 +86,10 @@ public abstract class Car implements Movable {
 
     }
 
-    public abstract double speedFactor();
+    public abstract double speedFactor(); //Abstract baseras på specifik modellklass
 
     @Override
-    public void move() {
+    public void move() { //Flyttar bilens x,y koordinater baserat på riktning och fart
         switch (currentDirection){
             case NORTH -> y+= currentSpeed;
             case EAST -> x+= currentSpeed;
@@ -100,7 +100,7 @@ public abstract class Car implements Movable {
     }
 
     @Override
-    public void turnLeft() {
+    public void turnLeft() { //svänger 90 grader baserat på riktning
         switch (currentDirection){
             case NORTH -> currentDirection = Directions.WEST;
             case EAST -> currentDirection = Directions.NORTH;
@@ -111,7 +111,7 @@ public abstract class Car implements Movable {
     }
 
     @Override
-    public void turnRight() {
+    public void turnRight() { //svänger 90 grader baserat på riktning
         switch (currentDirection){
             case NORTH -> currentDirection = Directions.EAST;
             case EAST -> currentDirection = Directions.SOUTH;
@@ -122,11 +122,11 @@ public abstract class Car implements Movable {
 
     }
 
-    public double getX() {
+    public double getX() { //Skickar ut x koordinat
         return x;
     }
 
-    public double getY() {
+    public double getY() { //Skickar ut y koordinat
         return y;
     }
 }

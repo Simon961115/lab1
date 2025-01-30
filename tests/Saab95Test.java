@@ -24,15 +24,15 @@ Saab95 saab = new Saab95();
         assertEquals(0.0, saab.getCurrentSpeed());
     }
 
-    @Test
-    void setCurrentSpeed() {
-        saab.setCurrentSpeed(10);
-        assertEquals(10, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(130);
-        assertEquals(125, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(-10);
-        assertEquals(0, saab.getCurrentSpeed());
-    }
+//    @Test
+//    void setCurrentSpeed() {
+//        saab.gas(10);
+//        assertEquals(10, saab.getCurrentSpeed());
+//        saab.setCurrentSpeed(130);
+//        assertEquals(125, saab.getCurrentSpeed());
+//        saab.setCurrentSpeed(-10);
+//        assertEquals(0, saab.getCurrentSpeed());
+//    }
 
     @Test
     void getColor() {
@@ -57,23 +57,23 @@ Saab95 saab = new Saab95();
         assertEquals(0.0, saab.getCurrentSpeed());
     }
 
-    @Test
-    void incrementSpeed() { // speedfactor = 1.25 currentspeed = 10 amount = 0.5
-        saab.setTurboOff();
-        saab.setCurrentSpeed(10);
-        saab.incrementSpeed(0.5);
-        assertEquals(10.625, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(10);
-        saab.incrementSpeed(1);
-        assertEquals(11.25, saab.getCurrentSpeed());
-    }
+//    @Test
+//    void incrementSpeed() { // speedfactor = 1.25 currentspeed = 10 amount = 0.5
+//        saab.setTurboOff();
+//        saab.setCurrentSpeed(10);
+//        saab.incrementSpeed(0.5);
+//        assertEquals(10.625, saab.getCurrentSpeed());
+//        saab.setCurrentSpeed(10);
+//        saab.incrementSpeed(1);
+//        assertEquals(11.25, saab.getCurrentSpeed());
+//    }
 
-    @Test
-    void decrementSpeed() {
-        saab.setCurrentSpeed(10);
-        saab.decrementSpeed(0.5);
-        assertEquals(9.375, saab.getCurrentSpeed());
-    }
+//    @Test
+//    void decrementSpeed() {
+//        saab.setCurrentSpeed(10);
+//        saab.decrementSpeed(0.5);
+//        assertEquals(9.375, saab.getCurrentSpeed());
+//    }
 
     @Test
     void move() {
@@ -86,20 +86,19 @@ Saab95 saab = new Saab95();
     @Test
     void turnLeft() {
         saab.startEngine();
-        saab.setCurrentSpeed(10);
+        saab.gas(1);
         saab.turnLeft();
         saab.move();
-        assertEquals(-10, saab.getX());
+        assertEquals(-1.35, saab.getX());
         assertEquals(0, saab.getY());
     }
 
     @Test
     void turnRight() {
-        saab.startEngine();
-        saab.setCurrentSpeed(10);
+        saab.gas(1);
         saab.turnRight();
         saab.move();
-        assertEquals(10, saab.getX());
+        assertEquals(1.25, saab.getX());
         assertEquals(0, saab.getY());
     }
 
@@ -117,13 +116,13 @@ Saab95 saab = new Saab95();
     @Test
     void setTurboOn() {
         saab.setTurboOn();
-        assertTrue(saab.turboOn);
+        assertTrue(saab.isTurboOn());
     }
 
     @Test
     void setTurboOff() {
         saab.setTurboOff();
-        assertFalse(saab.turboOn);
+        assertFalse(saab.isTurboOn());
     }
 
     @Test
@@ -136,27 +135,24 @@ Saab95 saab = new Saab95();
 
     @Test
     void gas() {
-        saab.setCurrentSpeed(10);
-        saab.gas(0);
-        assertEquals(10, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(10);
+        saab.gas(-1);
+        assertEquals(0, saab.getCurrentSpeed());
+        saab.gas(1);
+        assertEquals(1.25, saab.getCurrentSpeed());
         saab.gas(2);
-        assertEquals(11.25, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(10);
-        saab.gas(0.5);
-        assertEquals(10.625, saab.getCurrentSpeed());
+        assertEquals(2.5, saab.getCurrentSpeed());
     }
 
     @Test
     void brake() {
-        saab.setCurrentSpeed(10);
+        saab.gas(1);
         saab.brake(0);
-        assertEquals(10, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(10);
+        assertEquals(1.25, saab.getCurrentSpeed());
+        saab.gas(1);
         saab.brake(2);
-        assertEquals(8.75, saab.getCurrentSpeed());
-        saab.setCurrentSpeed(10);
+        assertEquals(1.25, saab.getCurrentSpeed());
+        saab.gas(1);
         saab.brake(0.5);
-        assertEquals(9.375, saab.getCurrentSpeed());
+        assertEquals(1.875, saab.getCurrentSpeed());
     }
 }
