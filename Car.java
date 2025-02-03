@@ -129,4 +129,10 @@ public abstract class Car implements Movable {
     public double getY() { //Skickar ut y koordinat
         return y;
     }
+
+    public void setPos(double x,double y) {
+        this.x = x;
+        this.y = y;
+    }
+
 }
