@@ -1,6 +1,5 @@
-import java.awt.*;
-import java.lang.Math;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import static java.lang.Math.abs;
 
@@ -8,13 +7,13 @@ import static java.lang.Math.abs;
 public class CarTransport extends Car {
     private double trimFactor;
     private boolean rampDown;
-    private ArrayList<Car> load;
+    private List<Car> load;
 
     public CarTransport() {
         super(2, java.awt.Color.black,540,"Transport");
-        trimFactor = 0.2
+        trimFactor = 0.2;
         rampDown = false;
-        load = new ArrayList<>();
+        load = new Stack<Car>();
 
     }
 

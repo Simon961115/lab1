@@ -5,6 +5,7 @@ public abstract class Car implements Movable {
 
     private Directions currentDirection;
     private double x, y;
+    //private CarTransport transport;
 
     private final int nrDoors; // Number of doors on the car
     private final double enginePower; // Engine power of the car
