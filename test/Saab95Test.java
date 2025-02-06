@@ -8,9 +8,7 @@ class Saab95Test {
     Saab95 saab = new Saab95();
     @Test
     void getNrDoors() {
-        int nDoors;
-        nDoors = saab.getNrDoors();
-        assertEquals(2, nDoors);
+        assertEquals(2, saab.getNrDoors());
     }
     
     @Test

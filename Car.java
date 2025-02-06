@@ -12,7 +12,8 @@ public abstract class Car implements Movable{
     private Directions currentDirection;
     private double x, y; // Position on x-/y-axis
     
-    protected boolean transportable = true; // if car is transportable in a car transport
+    private final boolean transportable; // If car is transportable in a car transport
+    private boolean transported; // If car is currently being transported.
     
     
     public Car(int nrDoors, double enginePower, Color color, String modelName) {
@@ -21,6 +22,19 @@ public abstract class Car implements Movable{
         this.color = color;
         this.modelName = modelName;
         this.currentDirection = Directions.NORTH;
+        this.transportable = true;
+        this.transported = false;
+        stopEngine();
+    }
+    
+    public Car(int nrDoors, double enginePower, Color color, String modelName, boolean transportable) {
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
+        this.currentDirection = Directions.NORTH;
+        this.transportable = transportable;
+        this.transported = false;
         stopEngine();
     }
     
@@ -77,7 +91,7 @@ public abstract class Car implements Movable{
     
     @Override
     public void move() {
-        switch (currentDirection){
+        switch (currentDirection) {
             case EAST -> x += currentSpeed; // move east
             case SOUTH -> y -= currentSpeed; // move south
             case WEST -> x -= currentSpeed; // move west
@@ -111,7 +125,7 @@ public abstract class Car implements Movable{
     public double getY(){
         return y;
     }
-    protected void setPosition(double x, double y){ // Needed for CarTransport
+    protected void setPosition(double x, double y){ // Needed for CarTransport, maybe not good?
         this.x = x;
         this.y = y;
     }
@@ -121,5 +135,15 @@ public abstract class Car implements Movable{
     }
     protected void setDirection(Directions dir){
         this.currentDirection = dir;
+    }
+    
+    public boolean getTransportable(){
+        return transportable;
+    }
+    public boolean getTransported(){
+        return transported;
+    }
+    public void setTransported(boolean transported){
+        this.transported = transported;
     }
 }

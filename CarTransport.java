@@ -9,12 +9,10 @@ public class CarTransport extends Car {
     private int currentCars;
     
     public CarTransport() {
-        super(2,100, Color.blue, "Scania");
+        super(2,100, Color.blue, "Scania",false);
         rampOpen = false;
         cars = new Stack<>();
         currentCars = 0;
-        transportable = false;
-    
     }
     
     @Override
@@ -26,10 +24,8 @@ public class CarTransport extends Car {
     }
     
     public void setRampOpen(boolean rampOpen) {
-        if (getCurrentSpeed() == 0){
+        if (getCurrentSpeed() == 0){ // Speed must be 0 to alter rampOpen.
             this.rampOpen = rampOpen;
-        } else {
-            this.rampOpen = false;
         }
     }
     
@@ -38,12 +34,14 @@ public class CarTransport extends Car {
     }
     
     public void loadCar(Car car) {
-        if (rampOpen &&                     // Ramp must be open,
+        if (rampOpen &&                     // To be loaded: the ramp must be open,
                 currentCars < maxCars &&    // must be fewer than maxCars already loaded,
-                car.transportable &&        // car must be transportable and be within 1 units distance to be loaded.
+                car.getTransportable() &&   // car must be transportable,
+                !car.getTransported() &&     // not currently being transported and be within 1 units of distance from transport.
                 1 >= Math.sqrt(Math.pow(this.getX() - car.getX(), 2) + Math.pow(this.getY() - car.getY(), 2))) {
             
             car.setPosition(this.getX(), this.getY());
+            car.setTransported(true);
             cars.push(car);
             currentCars++;
         }
@@ -51,7 +49,7 @@ public class CarTransport extends Car {
     
     // Unloads a car 1 unit behind transport facing the opposite direction.
     public void unloadCar() {
-        if (rampOpen && currentCars > 0) {
+        if (rampOpen && currentCars > 0) { // Ramp must be open, and there must be a car loaded.
             Car car = cars.pop();
             Directions dir = this.getCurrentDirection();
             switch (dir) {
@@ -72,9 +70,13 @@ public class CarTransport extends Car {
                     car.setDirection(Directions.EAST);
                 }
             }
-            
+            car.setTransported(false);
             currentCars--;
         }
+    }
+    
+    public int getCurrentCars() {
+        return currentCars;
     }
     
     @Override

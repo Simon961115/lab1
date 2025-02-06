@@ -14,9 +14,7 @@ public class ScaniaTest {
     
     @Test
     void getNrDoors() {
-        int nDoors;
-        nDoors = scania.getNrDoors();
-        assertEquals(2, nDoors);
+        assertEquals(2, scania.getNrDoors());
     }
     
     @Test

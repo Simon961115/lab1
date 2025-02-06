@@ -94,5 +94,32 @@ public class CarTest {
         assertEquals(1.25, saab.getCurrentSpeed());
     }
     
+    @Test
+    void setPosition() {
+        saab.setPosition(1,1);
+        assertEquals(1.0, saab.getX());
+        assertEquals(1.0, saab.getY());
+    }
+    
+    @Test
+    void getSetDirection() {
+        assertEquals(Car.Directions.NORTH, saab.getCurrentDirection());
+        saab.setDirection(Car.Directions.EAST);
+        assertEquals(Car.Directions.EAST, saab.getCurrentDirection());
+    }
+    
+    @Test
+    void getTransportable() {
+        assertTrue(saab.getTransportable());
+    }
+    
+    @Test
+    void getSetTransported() {
+        assertFalse(saab.getTransported());
+        saab.setTransported(true);
+        assertTrue(saab.getTransported());
+        saab.setTransported(false);
+        assertFalse(saab.getTransported());
+    }
     
 }
