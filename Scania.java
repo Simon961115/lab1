@@ -1,38 +1,33 @@
 import java.awt.*;
 
 public class Scania extends Car{
-
-    public final static double trimFactor = 0.2;
-    private double flakVinkel = 0;
-    private final static double maxVinkel = 70.0;
+    private int loadAngle;
 
     public Scania(){
-        super(2, Color.black, 540, "Scania");
+        super(2,100, Color.gray, "Scania", false);
+        loadAngle = 0;
     }
 
     @Override
-    public double speedFactor() {return getEnginePower() * 0.01 * trimFactor; }
+    public double speedFactor() {
+        if (loadAngle == 0){    // No speedFactor unless loadAngle is 0.
+            return getEnginePower() * 0.01;
+        } else {
+            return 0;
+        }
+    }
 
-    @Override
-    public void gas(double amount){ //Overridar gas funktionen från Car klassen och kollar så att falket är nere
-        if(flakVinkel == 0) {
-            super.gas(amount);
-        } else { System.out.println("Släpp ner flaket innan du kör!");}
-        //throw new IllegalStateException("Släpp ner flaket innan du kör!");
+    public int getLoadAngle() {
+        return loadAngle;
     }
-    public double getflakVinkel(){
-        return flakVinkel;
-    }
-    public void höjFlaket(double grader){ //Höjer flaket gradvis baserat på inputvärde, kastar fel om värdet negativt
-        if(grader < 0 || getCurrentSpeed() > 0.1){ //
-            System.out.println("Otillåtet värde/Stanna bilen");
+
+    public void increaseLoadAngle(int amount){
+        if (getCurrentSpeed() == 0){  // Cant increase loadAngle if truck is in motion.
+            loadAngle = Math.min(loadAngle + amount, 70); // Max angle is 70 degrees.
         }
-        flakVinkel = Math.min(flakVinkel + grader, maxVinkel);
     }
-    public void sänkFlaket(double grader){ //Sänker flaket gradvis baserat på inputvärde, kastar fel om värdet negativt
-        if(grader < 0 || getCurrentSpeed() > 0.1){
-            System.out.println("Otillåtet värde/Stanna bilen");//throw new IllegalArgumentException("Otillåtet värde/Stanna bilen");
-        }
-        flakVinkel = Math.max(flakVinkel - grader, 0);
+
+    public void decreaseLoadAngle(int amount){
+        loadAngle = Math.max(loadAngle - amount, 0); // Min angle is 0 degrees.
     }
 }

@@ -1,58 +1,91 @@
-import java.util.List;
+import java.awt.*;
 import java.util.Stack;
 
-import static java.lang.Math.abs;
-
-
 public class CarTransport extends Car {
-    private double trimFactor;
-    private boolean rampDown;
-    private List<Car> load;
+
+    private boolean rampOpen;
+    private Stack<Car> cars;
+    private final int maxCars = 5;
+    private int currentCars;
 
     public CarTransport() {
-        super(2, java.awt.Color.black,540,"Transport");
-        trimFactor = 0.2;
-        rampDown = false;
-        load = new Stack<Car>();
-
+        super(2,100, Color.blue, "Scania", false);
+        rampOpen = false;
+        cars = new Stack<>();
+        currentCars = 0;
     }
 
-    public void lowerRamp () {
-        if (getCurrentSpeed() == 0 ) {rampDown = true;}
+    @Override
+    public double speedFactor() {
+        if (rampOpen) {     // Returns 0 if ramp is open.
+            return 0;
+        }
+        return getEnginePower() * 0.01;
     }
 
-    public void raiseRamp() {
-        if (getCurrentSpeed() == 0 ) {rampDown = false;}
-
-    }
-
-    public boolean isRampDown () {
-        return rampDown;
-    }
-
-    public void unload (Car car) {
-        if (getCurrentSpeed() == 0 && isRampDown()) {
-            load.remove(car);
-            car.setPos(getX(),getY());
-
+    public void setRampOpen(boolean rampOpen) {
+        if (getCurrentSpeed() == 0){
+            this.rampOpen = rampOpen;
+        } else {
+            this.rampOpen = false;
         }
     }
 
-    public void loadCar (Car car) {
-        if (car instanceof CarTransport) {
-            throw new IllegalStateException("Kan ej lasta en biltranport på en biltransport!");
-        }
-        else if (carIsInRange(car) && isRampDown()){
-            load.add(car);
-        }
-
+    public boolean getRampOpen() {
+        return rampOpen;
     }
 
-    public boolean carIsInRange (Car car) {
-        return abs(getX()-car.getX()) < 5 && abs(getY()-car.getY()) < 5;
+    public void loadCar(Car car) {
+        if (rampOpen &&                     // Ramp must be open,
+                currentCars < maxCars &&    // must be fewer than maxCars already loaded,
+                car.getTransportable() &&// car must be transportable and be within 1 units distance to be loaded.
+                !car.getTransported() &&
+                1 >= Math.sqrt(Math.pow(this.getX() - car.getX(), 2) + Math.pow(this.getY() - car.getY(), 2))) {
 
+            car.setPosition(this.getX(), this.getY());
+            car.setTransported(true);
+            cars.push(car);
+            currentCars++;
+        }
     }
 
-    public double speedFactor() {return getEnginePower() * 0.01 * trimFactor; }
+    // Unloads a car 1 unit behind transport facing the opposite direction.
+    public void unloadCar() {
+        if (rampOpen && currentCars > 0) {
+            Car car = cars.pop();
+            Directions dir = this.getCurrentDirection();
+            switch (dir) {
+                case NORTH -> {
+                    car.setPosition(this.getX(), this.getY() - 1);
+                    car.setDirection(Directions.SOUTH);
+                }
+                case SOUTH -> {
+                    car.setPosition(this.getX(), this.getY() + 1);
+                    car.setDirection(Directions.NORTH);
+                }
+                case EAST -> {
+                    car.setPosition(this.getX() - 1, this.getY());
+                    car.setDirection(Directions.WEST);
+                }
+                case WEST -> {
+                    car.setPosition(this.getX() + 1, this.getY());
+                    car.setDirection(Directions.EAST);
+                }
+            }
+            car.setTransported(false);
+            currentCars--;
+        }
+    }
 
+    public int getCurrentCars(){
+        return currentCars;
+    }
+
+    @Override
+    public void move() {
+        super.move();
+        for (Car car : cars) {
+            car.setPosition(this.getX(), this.getY());
+        }
+    }
 }
