@@ -4,15 +4,12 @@ import java.util.Stack;
 public class CarTransport extends Car {
 
     private boolean rampOpen;
-    private Stack<Car> cars;
-    private final int maxCars = 5;
-    private int currentCars;
+    private final Load loadedCar;
 
     public CarTransport() {
         super(2,100, Color.blue, "Scania", false);
         rampOpen = false;
-        cars = new Stack<>();
-        currentCars = 0;
+        loadedCar = new Load(5);
     }
 
     @Override
@@ -36,23 +33,20 @@ public class CarTransport extends Car {
     }
 
     public void loadCar(Car car) {
-        if (rampOpen &&                     // Ramp must be open,
-                currentCars < maxCars &&    // must be fewer than maxCars already loaded,
-                car.getTransportable() &&// car must be transportable and be within 1 units distance to be loaded.
-                !car.getTransported() &&
+        if (rampOpen &&// Ramp must be open,
+                car.getTransportable() &&  // car must be transportable and be within 1 units distance to be loaded.
                 1 >= Math.sqrt(Math.pow(this.getX() - car.getX(), 2) + Math.pow(this.getY() - car.getY(), 2))) {
 
+            loadedCar.loadCar(car);
             car.setPosition(this.getX(), this.getY());
-            car.setTransported(true);
-            cars.push(car);
-            currentCars++;
+
         }
     }
 
     // Unloads a car 1 unit behind transport facing the opposite direction.
     public void unloadCar() {
-        if (rampOpen && currentCars > 0) {
-            Car car = cars.pop();
+        if (rampOpen) {
+            Car car = loadedCar.unloadCar(loadedCar.getLoadedCars().size()-1);
             Directions dir = this.getCurrentDirection();
             switch (dir) {
                 case NORTH -> {
@@ -73,18 +67,18 @@ public class CarTransport extends Car {
                 }
             }
             car.setTransported(false);
-            currentCars--;
+
         }
     }
 
     public int getCurrentCars(){
-        return currentCars;
+        return loadedCar.getLoadedCars().size();
     }
 
     @Override
     public void move() {
         super.move();
-        for (Car car : cars) {
+        for (Car car : loadedCar.getLoadedCars()) { //Updates loaded cars position while being transported
             car.setPosition(this.getX(), this.getY());
         }
     }

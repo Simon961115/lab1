@@ -173,5 +173,7 @@ public abstract class Car implements Movable {
     public void setTransported(boolean transported){
         this.transported = transported;
     }
-
+    public String getModelName(){
+        return this.modelName;
+    }
 }
