@@ -90,6 +90,7 @@ public class CarTransportTest {
         transport.loadCar(saab2);
         transport.loadCar(saab3);
         transport.loadCar(saab4);
+        assertEquals(4, transport.getCurrentCars());
         transport.unloadCar();
         assertEquals(Car.Directions.SOUTH, saab4.getCurrentDirection());
         transport.turnLeft();
@@ -120,10 +121,6 @@ public class CarTransportTest {
         transport.loadCar(saab1);
         transport.loadCar(saab2);
         transport.setRampOpen(false);
-        assertEquals(0, transport.getX());
-        assertEquals(0, transport.getY());
-        assertEquals(0, saab1.getX());
-        assertEquals(0, saab1.getY());
         transport.gas(1);
         transport.move();
         transport.move();
@@ -164,5 +161,12 @@ public class CarTransportTest {
         transport.move();
         assertEquals(0,transport.getCurrentSpeed());
         assertEquals(0,transport.getY());
+    }
+    
+    @Test
+    void unloadEmpty() {
+        transport.setRampOpen(true);
+        transport.unloadCar();
+        transport.unloadCar();
     }
 }

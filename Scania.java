@@ -9,7 +9,7 @@ public class Scania extends Car{
     }
     
     @Override
-    double speedFactor() {
+    public double speedFactor() {
         if (loadAngle == 0){    // No speedFactor unless loadAngle is 0.
             return enginePower * 0.01;
         } else {
@@ -22,7 +22,7 @@ public class Scania extends Car{
     }
     
     public void increaseLoadAngle(int amount){
-        if (this.currentSpeed == 0){  // Cant increase loadAngle if truck is in motion.
+        if (this.getCurrentSpeed() == 0){  // Cant increase loadAngle if truck is in motion.
             loadAngle = Math.min(loadAngle + amount, 70); // Max angle is 70 degrees.
         }
     }

@@ -4,7 +4,7 @@ public abstract class Car implements Movable{
     
     private final int nrDoors; // Number of doors on the car
     final double enginePower; // Engine power of the car
-    double currentSpeed; // The current speed of the car
+    private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private final String modelName; // The car model name
     
