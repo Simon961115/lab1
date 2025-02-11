@@ -15,9 +15,9 @@ public class Garage<T extends Car> {
     }
 
     public void parkCar(T car){
-        if(loadedCar.getLoadedCars().size() < loadedCar.getMaxCars() && car.getTransportable() &&
+        if(loadedCar.getLoadedCars().size() < loadedCar.getMaxCars() && car.getTransportable() && //Bil ska vara nära ingång
                 1 >= Math.sqrt(Math.pow(this.x - car.getX(), 2) + Math.pow(this.y - car.getY(), 2))){
-            loadedCar.loadCar(car);
+            loadedCar.loadCar(car); //Använder Loads, loadCard metod.
             car.setTransported(true);
         }
     }
