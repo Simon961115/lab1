@@ -1,60 +1,79 @@
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ScaniaTest {
-Scania scania = new Scania();
-final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
+public class ScaniaTest {
+    Scania scania = new Scania();
+    
+    @BeforeEach
+    public void setUp() {
+        scania.increaseLoadAngle(30);
+    }
+    
+    @Test
+    void getNrDoors() {
+        assertEquals(2, scania.getNrDoors());
+    }
+    
+    @Test
+    void getEnginePower() {
+        assertEquals(100, scania.getEnginePower());
+    }
+    
+    @Test
+    void getColor() {
+        assertEquals(Color.gray, scania.getColor());
+    }
+    
+    @Test
+    void getLoadAngle() {
+        assertEquals(30, scania.getLoadAngle());
+    }
+    
+    
+    @Test
+    void increaseLoadAngle() {
+        scania.increaseLoadAngle(10);
+        assertEquals(40, scania.getLoadAngle());
+        scania.increaseLoadAngle(100);
+        assertEquals(70, scania.getLoadAngle());
+    }
+    
+    @Test
+    void decreaseLoadAngle() {
+        scania.decreaseLoadAngle(10);
+        assertEquals(20, scania.getLoadAngle());
+        scania.decreaseLoadAngle(100);
+        assertEquals(0, scania.getLoadAngle());
+    }
+    
     @Test
     void gas(){
         scania.gas(1);
-        assertEquals(1.08,scania.getCurrentSpeed());
-    }
-
-    @Test
-    void gasMedFlakUppe() {
-        System.setOut(new PrintStream(outContent));
-        scania.höjFlaket(10);
+        assertEquals(0, scania.getCurrentSpeed());
+        scania.decreaseLoadAngle(30);
         scania.gas(1);
-        assertEquals("Släpp ner flaket innan du kör!\n", outContent.toString());
+        assertEquals(1, scania.getCurrentSpeed());
     }
-
+    
     @Test
-    void getflakVinkel() {
-        scania.höjFlaket(15);
-        assertEquals(15,scania.getflakVinkel());
-    }
-
-    @Test
-    void höjFlaket() {
-        scania.höjFlaket(10);
-        assertEquals(10, scania.getflakVinkel());
-    }
-
-    @Test
-    void sänkFlaket() {
-        scania.höjFlaket(20);
-        scania.sänkFlaket(10);
-        assertEquals(10,scania.getflakVinkel());
-    }
-    @Test
-    void höjFlaketMedFart(){
-        System.setOut(new PrintStream(outContent));
-        scania.startEngine();
+    void brake(){
+        scania.decreaseLoadAngle(30);
         scania.gas(1);
-        scania.höjFlaket(10);
-        assertEquals("Otillåtet värde/Stanna bilen\n", outContent.toString());
+        assertEquals(1, scania.getCurrentSpeed());
+        scania.brake(0.5);
+        assertEquals(0.5, scania.getCurrentSpeed());
+        scania.brake(10);
+        assertEquals(0, scania.getCurrentSpeed());
     }
+    
     @Test
-    void sänkFlaketMedFart(){
-        System.setOut(new PrintStream(outContent));
-        scania.startEngine();
+    void increaseAngleInMotion() {
+        scania.decreaseLoadAngle(30);
         scania.gas(1);
-        scania.sänkFlaket(10);
-        assertEquals("Otillåtet värde/Stanna bilen\n", outContent.toString());
+        scania.increaseLoadAngle(10);
+        assertEquals(0, scania.getLoadAngle());
     }
 }
