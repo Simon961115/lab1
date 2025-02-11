@@ -1,32 +1,30 @@
-import java.util.List;
-import java.util.LinkedList;
-public class Garage<T extends Car> {
+public class Workshop<T extends Vehicle> {
 
     private double x, y;
-    private final Load loadedCar;
+    private final Container loadedCar;
 
-    public Garage(int maxCarSpots){
+    public Workshop(int maxCarSpots){
         if (maxCarSpots <= 0) {
             throw new IllegalArgumentException("Antalet parkeringsplatser måste vara större än 0.");
         }
-        loadedCar = new Load(maxCarSpots);
+        loadedCar = new Container(maxCarSpots);
         this.x = 0; //Temporära koordinater för garaget, kan tillföras som parameter om så behövs.
         this.y = 0;
     }
 
     public void parkCar(T car){
-        if(loadedCar.getLoadedCars().size() < loadedCar.getMaxCars() && car.getTransportable() && //Bil ska vara nära ingång
+        if(loadedCar.getLoadedItem().size() < loadedCar.getMaxItems() && car.getTransportable() && //Bil ska vara nära ingång
                 1 >= Math.sqrt(Math.pow(this.x - car.getX(), 2) + Math.pow(this.y - car.getY(), 2))){
-            loadedCar.loadCar(car); //Använder Loads, loadCard metod.
+            loadedCar.loadItem(car); //Använder Loads, loadCard metod.
             car.setTransported(true);
         }
     }
     public T removeCar(T car) {
-        for (int i = 0; i < loadedCar.getLoadedCars().size(); i++) {
-            if (car.equals(loadedCar.getLoadedCars().get(i))) {
-                T tmpCar = (T) loadedCar.unloadCar(i);
+        for (int i = 0; i < loadedCar.getLoadedItem().size(); i++) {
+            if (car.equals(loadedCar.getLoadedItem().get(i))) {
+                T tmpCar = (T) loadedCar.unloadItem(i);
                 car.setTransported(false);
-                car.setDirection(Car.Directions.NORTH);
+                car.setDirection(Vehicle.Directions.NORTH);
                 car.setPosition(this.x + 1, this.y + 1);
                 carModelRemoved(car);
                 return tmpCar;
@@ -37,13 +35,14 @@ public class Garage<T extends Car> {
     }
 
     public void listParkedCars() {
-        if (loadedCar.getLoadedCars().isEmpty()) {
+        if (loadedCar.getLoadedItem().isEmpty()) {
             System.out.println("Inga bilar är parkerade.");
             return;
         }
         System.out.println("Parkerade bilar:");
-        for (int i = 0; i < loadedCar.getLoadedCars().size(); i++) {
-            System.out.println(i + ": " + loadedCar.getLoadedCars().get(i).getModelName());
+        for (int i = 0; i < loadedCar.getLoadedItem().size(); i++) {
+            Vehicle vehicle = (Vehicle) loadedCar.getLoadedItem().get(i);
+            System.out.println(i + ": " + vehicle.getModelName());
         }
     }
     private void carModelRemoved(T car){

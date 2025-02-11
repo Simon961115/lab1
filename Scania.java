@@ -1,10 +1,10 @@
 import java.awt.*;
 
-public class Scania extends Car{
+public class Scania extends Vehicle {
     private int loadAngle;
 
     public Scania(){
-        super(2,100, Color.gray, "Scania", false);
+        super(2,Color.gray, 100, "Scania", false);
         loadAngle = 0;
     }
 

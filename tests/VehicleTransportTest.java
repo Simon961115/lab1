@@ -3,8 +3,8 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
-public class CarTransportTest {
-    CarTransport transport = new CarTransport();
+public class VehicleTransportTest {
+    VehicleTransport transport = new VehicleTransport();
     Saab95 saab1= new Saab95();
     Saab95 saab2= new Saab95();
     Saab95 saab3= new Saab95();
@@ -91,16 +91,16 @@ public class CarTransportTest {
         transport.loadCar(saab3);
         transport.loadCar(saab4);
         transport.unloadCar();
-        assertEquals(Car.Directions.SOUTH, saab4.getCurrentDirection());
+        assertEquals(Vehicle.Directions.SOUTH, saab4.getCurrentDirection());
         transport.turnLeft();
         transport.unloadCar();
-        assertEquals(Car.Directions.EAST, saab3.getCurrentDirection());
+        assertEquals(Vehicle.Directions.EAST, saab3.getCurrentDirection());
         transport.turnLeft();
         transport.unloadCar();
-        assertEquals(Car.Directions.NORTH, saab2.getCurrentDirection());
+        assertEquals(Vehicle.Directions.NORTH, saab2.getCurrentDirection());
         transport.turnLeft();
         transport.unloadCar();
-        assertEquals(Car.Directions.WEST, saab1.getCurrentDirection());
+        assertEquals(Vehicle.Directions.WEST, saab1.getCurrentDirection());
     }
 
     @Test

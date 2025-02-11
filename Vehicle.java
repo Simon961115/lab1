@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class Vehicle implements Movable {
     public enum Directions{NORTH, EAST, WEST, SOUTH}
 
     private Directions currentDirection;
@@ -13,10 +13,10 @@ public abstract class Car implements Movable {
     private Color color; // Color of the car
     private final String modelName; // The car model name
 
-    private final boolean transportable; // If car is transportable in a car transport
+    private  boolean transportable; // If car is transportable in a car transport
     private boolean transported; // If car is currently being transported.
 
-    public Car (int nrDoors, Color color,double enginePower, String modelName) {
+    public Vehicle(int nrDoors, Color color, double enginePower, String modelName) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -27,15 +27,9 @@ public abstract class Car implements Movable {
         stopEngine();
     }
 
-    public Car(int nrDoors, double enginePower, Color color, String modelName, boolean transportable) {
-        this.nrDoors = nrDoors;
-        this.enginePower = enginePower;
-        this.color = color;
-        this.modelName = modelName;
-        this.currentDirection = Directions.NORTH;
-        this.transportable = transportable;
-        this.transported = false;
-        stopEngine();
+    public Vehicle(int nrDoors, Color color, double enginePower, String modelName, boolean transportable) {
+      this(nrDoors, color, enginePower ,modelName);
+      this.transportable = transportable;
     }
 
 
