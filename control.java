@@ -13,21 +13,21 @@ public class control {
         volvoGarage.listParkedCars();
 
 */
-        Garage<Saab95> saabGarage = new Garage<>(2);
-        saabGarage.parkCar(saab); // OK
+        Workshop<Saab95> saabWorkshop = new Workshop<>(2);
+        saabWorkshop.parkCar(saab); // OK
         //saabGarage.parkCar(volvo); Går ej
-        saabGarage.listParkedCars();
-        saabGarage.removeCar(saab);
-        saabGarage.removeCar(saab2);
+        saabWorkshop.listParkedCars();
+        saabWorkshop.removeCar(saab);
+        saabWorkshop.removeCar(saab2);
 
-        Garage<Car> verkstad = new Garage<>(5);
+        Workshop<Vehicle> verkstad = new Workshop<>(5);
         verkstad.parkCar(volvo);
         verkstad.parkCar(saab3);
         verkstad.parkCar(volvo2);
         verkstad.parkCar(saab);
         verkstad.listParkedCars();
-        Car nej = verkstad.removeCar(volvo2);
-        Car okej = verkstad.removeCar(saab);
+        Vehicle nej = verkstad.removeCar(volvo2);
+        Vehicle okej = verkstad.removeCar(saab);
         System.out.println(nej);
         System.out.println(okej);
         verkstad.removeCar(saab);

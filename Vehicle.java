@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class Vehicle implements Movable {
     public enum Directions{NORTH, EAST, WEST, SOUTH}
 
     private Directions currentDirection;
@@ -16,18 +16,7 @@ public abstract class Car implements Movable {
     private final boolean transportable; // If car is transportable in a car transport
     private boolean transported; // If car is currently being transported.
 
-    public Car (int nrDoors, Color color,double enginePower, String modelName) {
-        this.nrDoors = nrDoors;
-        this.enginePower = enginePower;
-        this.color = color;
-        this.modelName = modelName;
-        this.currentDirection = Directions.NORTH;
-        this.transportable = true;
-        this.transported = false;
-        stopEngine();
-    }
-
-    public Car(int nrDoors, double enginePower, Color color, String modelName, boolean transportable) {
+    public Vehicle(int nrDoors, Color color, double enginePower, String modelName, boolean transportable) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
         this.color = color;
@@ -36,6 +25,10 @@ public abstract class Car implements Movable {
         this.transportable = transportable;
         this.transported = false;
         stopEngine();
+    }
+
+    public Vehicle(int nrDoors, Color color, double enginePower, String modelName) {
+      this(nrDoors, color, enginePower, modelName, true);
     }
 
 
@@ -83,14 +76,14 @@ public abstract class Car implements Movable {
         setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount,0));
     }
 
-    public void gas(double amount){ //Ger fart, inom värdet 0-1 så att gas inte bromsar
-        if(amount <= 0) {
-            incrementSpeed(0);
+    public void gas(double amount) { //Ger fart, inom värdet 0-1 så att gas inte bromsar
+        if (!transported) {
+            if (amount <= 0) {
+                incrementSpeed(0);
+            } else if (amount >= 1) {
+                incrementSpeed(1);
+            } else incrementSpeed(amount);
         }
-        else if (amount >= 1){
-            incrementSpeed(1);
-        }
-        else incrementSpeed(amount);
     }
 
     public void brake(double amount){ //Saktar ner farten, håller sig inom 0-1.

@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-class GarageTest {
+class WorkshopTest {
 
     final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
@@ -16,7 +16,7 @@ class GarageTest {
     @Test
     void parkCar() {
         System.setOut(new PrintStream(outContent));
-        Garage<Car> verkstad = new Garage<>(5);
+        Workshop<Vehicle> verkstad = new Workshop<>(5);
         verkstad.parkCar(volvo);
         verkstad.parkCar(saab);
         verkstad.listParkedCars();
@@ -26,7 +26,7 @@ class GarageTest {
 
     @Test
     void removeCar() {
-        Garage<Car> verkstad = new Garage<>(10);
+        Workshop<Vehicle> verkstad = new Workshop<>(10);
         verkstad.parkCar(saab);
         verkstad.parkCar(volvo);
         verkstad.parkCar(volvo1);
@@ -39,9 +39,9 @@ class GarageTest {
     @Test
     void listParkedCars() {
         System.setOut(new PrintStream(outContent));
-        Garage<Car> volvoGarage = new Garage<>(5);
-        volvoGarage.parkCar(volvo);
-        volvoGarage.listParkedCars();
+        Workshop<Vehicle> volvoWorkshop = new Workshop<>(5);
+        volvoWorkshop.parkCar(volvo);
+        volvoWorkshop.listParkedCars();
         assertEquals("Parkerade bilar:\n" + "0: Volvo240\n", outContent.toString());
     }
 }
