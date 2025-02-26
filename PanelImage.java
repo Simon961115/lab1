@@ -11,7 +11,7 @@ public class PanelImage {
     public PanelImage(Point pos, String fileName) {
         this.carPoint = pos;
         try {
-            this.image = ImageIO.read(DrawPanel.class.getResourceAsStream(fileName));
+            this.image = ImageIO.read(CarView.class.getResourceAsStream(fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
