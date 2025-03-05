@@ -21,9 +21,10 @@ public class CarView extends JFrame {
 
 
 
-    public CarView(String framename, World world) {
+    public CarView(String framename, CarPanel panel) {
 
-        controller = new CarController(world);
+        //this.panel = panel;
+        controller = new CarController(panel);
         drawPanel = new DrawPanel();
         initComponents(framename);
 

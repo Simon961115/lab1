@@ -24,7 +24,7 @@ public class World {
         world.panel = new CarPanel();// Skapar en modell
 
 
-        world.view = new CarView(frameName,world);
+        world.view = new CarView(frameName,world.panel);
 
 
         world.timer.start();
@@ -33,31 +33,6 @@ public class World {
 
    }
 
-   void gas (int amount) {
-        panel.gas(amount);
-
-   }
-
-    void brake (int amount) {
-        panel.brake(amount);
-
-    }
-
-    void setTurbo (boolean turbo) {
-        panel.setTurbo(turbo);
-
-    }
-    void setLiftAngle (int angle) {
-        panel.setLiftAngle(angle);
-    }
-
-   void stopEngine () {
-        panel.stopEngine();
-   }
-
-   void startEngine() {
-        panel.startEngine();
-   }
 
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {

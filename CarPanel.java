@@ -4,9 +4,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /*
-* This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
-* modifying the model state and the updating the view.
+Klass som innehåller lista med bilar, volvoverkstad samt alla operationer du kan göra på bilar.
+
+
  */
 
 public class CarPanel {
@@ -15,7 +15,7 @@ public class CarPanel {
     ArrayList<Vehicle> cars = new ArrayList<>();
 
     Workshop<Volvo240> volvoWorkshop = new Workshop<>(5,300,300);
-    //methods:
+
 
     public CarPanel() {
         cars.add(new Volvo240());
@@ -81,10 +81,4 @@ public class CarPanel {
             car.startEngine();
         }
     }
-
-//    void update () {
-//        for (Vehicle car: cars) {
-//            car.
-//        }
-//    }
 }

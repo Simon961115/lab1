@@ -12,7 +12,8 @@ public class CarController extends JPanel{
     //?
     private static final int X = 800;
 
-    private World world; // Världen som controllern styr
+    //private World world; // De bilar som controllern styr
+    private CarPanel panel;
 
     //Knappgrejer
     JPanel controlPanel = new JPanel();
@@ -33,8 +34,8 @@ public class CarController extends JPanel{
 
 
 
-    public CarController(World world){
-        this.world = world;
+    public CarController(CarPanel panel){
+        this.panel = panel;
         this.initComponents("Controller");
     }
 
@@ -87,7 +88,7 @@ public class CarController extends JPanel{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                world.gas(gasAmount);
+                panel.gas(gasAmount);
 
             }
         });
@@ -96,7 +97,7 @@ public class CarController extends JPanel{
         brakeButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               world.brake(gasAmount);
+               panel.brake(gasAmount);
            }
         });
         
@@ -104,39 +105,39 @@ public class CarController extends JPanel{
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                world.setTurbo(true);
+                panel.setTurbo(true);
             }
         });
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                world.setTurbo(false);
+                panel.setTurbo(false);
             }
         });
         
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                world.setLiftAngle(70);
+                panel.setLiftAngle(70);
             }
         });
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                world.setLiftAngle(-70);
+                panel.setLiftAngle(-70);
             }
         });
         
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                world.stopEngine();
+                panel.stopEngine();
             }
         });
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                world.startEngine();
+                panel.startEngine();
             }
         });
 
