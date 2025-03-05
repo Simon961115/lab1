@@ -5,13 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * This class represents the full view of the MVC pattern of your car simulator.
- * It initializes with being center on the screen and attaching it's controller in it's state.
- * It communicates with the Controller by calling methods of it when an action fires of in
- * each of it's components.
- * TODO: Write more actionListeners and wire the rest of the buttons
- **/
 
 public class CarController extends JPanel{
 
@@ -19,8 +12,9 @@ public class CarController extends JPanel{
     //?
     private static final int X = 800;
 
+    private World world; // Världen som controllern styr
+
     //Knappgrejer
-    CarPanel panel;
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
@@ -39,8 +33,8 @@ public class CarController extends JPanel{
 
 
 
-    public CarController(CarPanel panel){
-        this.panel = panel;
+    public CarController(World world){
+        this.world = world;
         this.initComponents("Controller");
     }
 
@@ -93,7 +87,8 @@ public class CarController extends JPanel{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.gas(gasAmount);
+                world.gas(gasAmount);
+
             }
         });
 
@@ -101,7 +96,7 @@ public class CarController extends JPanel{
         brakeButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               panel.brake(gasAmount);
+               world.brake(gasAmount);
            }
         });
         
@@ -109,37 +104,39 @@ public class CarController extends JPanel{
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.setTurbo(true);
+                world.setTurbo(true);
             }
         });
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.setTurbo(false);
+                world.setTurbo(false);
             }
         });
         
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.setLiftAngle(70);
+                world.setLiftAngle(70);
             }
         });
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){panel.setLiftAngle(-70);
+            public void actionPerformed(ActionEvent e){
+                world.setLiftAngle(-70);
             }
         });
         
         stopButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {panel.stopEngine();
+            public void actionPerformed(ActionEvent e) {
+                world.stopEngine();
             }
         });
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.startEngine();
+                world.startEngine();
             }
         });
 

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class control {
+public class World {
 
     // measures of the car.jpgs
     private int carPicX = 100;
@@ -15,25 +15,50 @@ public class control {
     static String frameName = "Car simulator";
 
     CarPanel panel;
-    CarController controller;
-    DrawPanel drawPanel;
+    CarView view;
 
     public static void main(String[] args){
 
-        control world = new control(); // Skapar en instans av sig själv
+        World world = new World(); // Skapar en instans av sig själv
 
-        world.panel = new CarPanel();  // Skapar en ny panel
+        world.panel = new CarPanel();// Skapar en modell
 
-        world.controller = new CarController(world.panel);
 
-        world.drawPanel = new DrawPanel();
+        world.view = new CarView(frameName,world);
 
-        CarView view = new CarView(frameName,world.controller,world.drawPanel);
 
         world.timer.start();
 
 
+
    }
+
+   void gas (int amount) {
+        panel.gas(amount);
+
+   }
+
+    void brake (int amount) {
+        panel.brake(amount);
+
+    }
+
+    void setTurbo (boolean turbo) {
+        panel.setTurbo(turbo);
+
+    }
+    void setLiftAngle (int angle) {
+        panel.setLiftAngle(angle);
+    }
+
+   void stopEngine () {
+        panel.stopEngine();
+   }
+
+   void startEngine() {
+        panel.startEngine();
+   }
+
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle car : panel.cars) {
@@ -43,7 +68,7 @@ public class control {
 
                 // Checks if car is out of bounds, if so, car is flipped,
                 if (    x > 700 - carPicX ||
-                        y > 460 - carPicY ||
+                        y > 560 - carPicY ||
                         x < 0 || y < 0) {
                     car.turnLeft();
                     car.turnLeft();
@@ -62,9 +87,9 @@ public class control {
                 }
 
                 int i = panel.cars.indexOf(car);
-                drawPanel.moveit(x, y,i);
+                view.drawPanel.moveit(x, y,i);
                 // repaint() calls the paintComponent method of the panel
-                drawPanel.repaint();
+                view.drawPanel.repaint();
             }
         }
     }

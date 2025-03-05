@@ -9,29 +9,22 @@ public class CarView extends JFrame {
     private static final int X = 700;
     private static final int Y = 700;
 
+    //World world; // Världen som view representerar
+
+    //CarPanel panel;
     CarController controller;
     DrawPanel drawPanel;
 
 
 
     ArrayList<PanelImage> cars = new ArrayList<>();
-    
-    PanelImage volvoWorkshop = new PanelImage(new Point(300,300), "pics/VolvoBrand.jpg");
-    PanelImage volvoImage = new PanelImage(new Point(),"pics/Volvo240.jpg" );   // Corresponds to
-    PanelImage saabImage = new PanelImage(new Point(), "pics/Saab95.jpg");      // cars added in
-    PanelImage scaniaImage = new PanelImage(new Point(), "pics/Scania.jpg");    // CarController main
-    
-    
-    
-    BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(300,300);
-    
 
 
-    public CarView(String framename, CarController controller,DrawPanel drawpanel) {
-        this.controller = controller;
-        this.drawPanel = drawpanel;
 
+    public CarView(String framename, World world) {
+
+        controller = new CarController(world);
+        drawPanel = new DrawPanel();
         initComponents(framename);
 
 
