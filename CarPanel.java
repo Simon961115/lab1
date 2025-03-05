@@ -24,18 +24,7 @@ public class CarPanel {
         cars.get(1).setPosition(100,0); // Står att offseten ska vara på y-led men satt den i x.
         cars.get(2).setPosition(200,0);
         cars.get(0).setPosition(200,0);
-
-        // Start the timer
-
-
     }
-
-
-
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-
 
     // Calls the gas method for each car once
     void gas(int amount) {
@@ -92,4 +81,10 @@ public class CarPanel {
             car.startEngine();
         }
     }
+
+//    void update () {
+//        for (Vehicle car: cars) {
+//            car.
+//        }
+//    }
 }

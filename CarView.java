@@ -5,13 +5,15 @@ import java.util.ArrayList;
 
 // This panel represents the animated part of the view with the car images.
 
-public class CarView extends JPanel{
+public class CarView extends JFrame {
+    private static final int X = 700;
+    private static final int Y = 700;
 
-    // Just a single image, TODO: Generalize
-    //BufferedImage volvoImage;
-    //BufferedImage saabImage;
-    //BufferedImage scaniaImage;
-    // To keep track of a single car's position
+    CarController controller;
+    DrawPanel drawPanel;
+
+
+
     ArrayList<PanelImage> cars = new ArrayList<>();
     
     PanelImage volvoWorkshop = new PanelImage(new Point(300,300), "pics/VolvoBrand.jpg");
@@ -25,49 +27,35 @@ public class CarView extends JPanel{
     Point volvoWorkshopPoint = new Point(300,300);
     
 
-    // TODO: Make this general for all cars
-    void moveit(int x, int y, int i){
-        cars.get(i).setPoint(x, y);
-    }
 
-    // Initializes the panel and reads the images
-    public CarView(int x, int y) {
-        this.setDoubleBuffered(true);
-        this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.green);
-        cars.add(volvoImage);
-        cars.add(saabImage);
-        cars.add(scaniaImage);
-        // Print an error message in case file is not found with a try/catch block
-//        try {
-//            // You can remove the "pics" part if running outside of IntelliJ and
-//            // everything is in the same main folder.
-//            // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
-//
-//            // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
-//            // if you are starting in IntelliJ.
-//            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
-//            saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
-//            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
-//            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-//
-//        } catch (IOException ex)
-//        {
-//            ex.printStackTrace();
-//        }
+    public CarView(String framename, CarController controller,DrawPanel drawpanel) {
+        this.controller = controller;
+        this.drawPanel = drawpanel;
+
+        initComponents(framename);
+
 
     }
 
-    // This method is called each time the panel updates/refreshes/repaints itself
-    // TODO: Change to suit your needs.
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // see javadoc for more info on the parameters
-        g.drawImage(volvoWorkshop.getImage(), volvoWorkshop.getX(), volvoWorkshop.getY(), null);
-        for (PanelImage car : cars) {
-            g.drawImage(car.getImage(), car.getX(), car.getY(), null);
-        }
-        
+    private void initComponents(String title) {
+
+        this.setTitle(title);
+        this.setPreferredSize(new Dimension(X, Y));
+        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
+        this.add(drawPanel);
+        this.add(controller);
+
+        this.pack();
+
+        // Get the computer screen resolution
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        // Center the frame
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        // Make the frame visible
+        this.setVisible(true);
+        // Make sure the frame exits when "x" is pressed
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
 }
