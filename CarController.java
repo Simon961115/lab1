@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 
 public class CarController extends JPanel{
 
+    private int screenWidth = 700;
+    private int screenHeight = 560;
 
     private int carPicX = 100;
     private int carPicY = 60;
@@ -162,8 +164,8 @@ public class CarController extends JPanel{
                 int y = (int) Math.round(car.getY());
 
                 // Checks if car is out of bounds, if so, car is flipped,
-                if (    x > 700 - carPicX ||
-                        y > 560 - carPicY ||
+                if (    x > screenWidth - carPicX ||
+                        y > screenHeight - carPicY ||
                         x < 0 || y < 0) {
                     car.turnLeft();
                     car.turnLeft();

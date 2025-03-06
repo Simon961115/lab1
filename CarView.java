@@ -36,9 +36,12 @@ public class CarView extends JFrame implements Observer {
         drawPanel.moveit(x,y,i);
     }
 
+
+
     public void repaint() {
         drawPanel.repaint();
     }
+
 
     private void initComponents(String title) {
 

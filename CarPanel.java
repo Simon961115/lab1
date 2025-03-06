@@ -22,9 +22,11 @@ public class CarPanel {
 
 
     public CarPanel() {
-        cars.add(new Volvo240());
-        cars.add(new Saab95());
-        cars.add(new Scania());
+
+        for (int i = 0; i < 3;i++) {
+            cars.add(CarFactory.createRandomCar());
+        }
+
         cars.get(1).setPosition(100,0); // Står att offseten ska vara på y-led men satt den i x.
         cars.get(2).setPosition(200,0);
         cars.get(0).setPosition(200,0);
