@@ -34,6 +34,8 @@ public class CarView extends JFrame implements Observer {
         drawPanel.moveit(x,y,i);
     }
 
+
+
     public void repaint() {
         drawPanel.repaint();
     }
@@ -47,6 +49,7 @@ public class CarView extends JFrame implements Observer {
     public void removeCar(){
         drawPanel.cars.remove(drawPanel.cars.size()-1);
     }
+
 
     private void initComponents(String title) {
 
