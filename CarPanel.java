@@ -14,6 +14,10 @@ public class CarPanel {
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
 
+    ArrayList<Observer> observers = new ArrayList<>();
+
+
+
     Workshop<Volvo240> volvoWorkshop = new Workshop<>(5,300,300);
 
 
@@ -81,4 +85,24 @@ public class CarPanel {
             car.startEngine();
         }
     }
+
+    void updateCarPos(int x, int y, int i) {
+
+        for (Observer observer : observers) {
+            observer.moveIt(x, y,i);
+        }
+    }
+
+    void update() {
+        for (Observer observer : observers) {
+            observer.repaint();
+        }
+    }
+
+    void addObserver (Observer observer) {
+        observers.add(observer);
+    }
+
+
+
 }

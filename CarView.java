@@ -1,13 +1,12 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.util.ArrayList;
 
 // This panel represents the animated part of the view with the car images.
 
-public class CarView extends JFrame {
-    private static final int X = 700;
-    private static final int Y = 700;
+public class CarView extends JFrame implements Observer {
+    private static final int X = 600;
+    private static final int Y = 600;
 
     //World world; // Världen som view representerar
 
@@ -21,14 +20,24 @@ public class CarView extends JFrame {
 
 
 
-    public CarView(String framename, CarPanel panel) {
+    public CarView(String framename,CarController controller) {
 
         //this.panel = panel;
-        controller = new CarController(panel);
+        this.controller = controller;
         drawPanel = new DrawPanel();
         initComponents(framename);
 
 
+
+    }
+
+    @Override
+    public void moveIt(int x, int y, int i) {
+        drawPanel.moveit(x,y,i);
+    }
+
+    public void repaint() {
+        drawPanel.repaint();
     }
 
     private void initComponents(String title) {

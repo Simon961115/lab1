@@ -4,10 +4,17 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.ActionEvent;
 
 public class CarController extends JPanel{
 
+
+    private int carPicX = 100;
+    private int carPicY = 60;
+
+    //Timer
+    private final int delay = 50;
+    private Timer timer = new Timer(delay, new TimerListener());
 
     //?
     private static final int X = 800;
@@ -37,6 +44,7 @@ public class CarController extends JPanel{
     public CarController(CarPanel panel){
         this.panel = panel;
         this.initComponents("Controller");
+        timer.start();
     }
 
 
@@ -82,6 +90,8 @@ public class CarController extends JPanel{
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
         this.add(stopButton);
+
+
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
@@ -141,6 +151,43 @@ public class CarController extends JPanel{
             }
         });
 
+    }
+
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (panel == null) return;
+            for (Vehicle car : panel.cars) {
+                car.move();
+                int x = (int) Math.round(car.getX());
+                int y = (int) Math.round(car.getY());
+
+                // Checks if car is out of bounds, if so, car is flipped,
+                if (    x > 700 - carPicX ||
+                        y > 560 - carPicY ||
+                        x < 0 || y < 0) {
+                    car.turnLeft();
+                    car.turnLeft();
+                    car.move();
+                    x = (int) Math.round(car.getX());
+                    y = (int) Math.round(car.getY());
+                } else if ( car.getClass() == Volvo240.class && !car.getTransported() &&
+                        panel.volvoWorkshop.getCurrentCarsParked() < panel.volvoWorkshop.getMaxCarSpots() &&
+                        panel.volvoWorkshop.getX() - carPicX <= car.getX() && panel.volvoWorkshop.getX() + 101 >= car.getX() &&
+                        panel.volvoWorkshop.getY() - carPicY <= car.getY() && panel.volvoWorkshop.getY() + 96 >= car.getY()) {
+                    car.stopEngine();
+                    car.setPosition(panel.volvoWorkshop.getX(),
+                            panel.volvoWorkshop.getY() - 10 * (1 + panel.volvoWorkshop.getCurrentCarsParked()));
+                    panel.volvoWorkshop.parkCar((Volvo240) car);
+
+                }
+
+                int i = panel.cars.indexOf(car);
+                panel.updateCarPos(x, y,i);
+                // repaint() calls the paintComponent method of the panel
+
+            }
+            panel.update();
+        }
     }
 
 }
