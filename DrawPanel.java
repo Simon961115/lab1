@@ -16,8 +16,11 @@ public class DrawPanel extends JPanel {
     Point volvoWorkshopPoint = new Point(300,300);
 
 
-
-    void moveit(int x, int y, int i){
+    void addCar(String image) {
+        cars.add(new PanelImage(new Point(), image));
+    }
+    
+    public void moveit(int x, int y, int i) {
         cars.get(i).setPoint(x, y);
     }
 

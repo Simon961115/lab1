@@ -24,9 +24,7 @@ public class App {
         CarView view = new CarView("Car simulator", controller);
 
         panel.addObserver(view);
-
-
-
+        
    }
 
 

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 // This panel represents the animated part of the view with the car images.
 
 public class CarView extends JFrame implements Observer {
-    private static final int X = 600;
-    private static final int Y = 600;
+    private static final int X = 800;
+    private static final int Y = 800;
 
     //World world; // Världen som view representerar
 
@@ -26,9 +26,7 @@ public class CarView extends JFrame implements Observer {
         this.controller = controller;
         drawPanel = new DrawPanel();
         initComponents(framename);
-
-
-
+        
     }
 
     @Override
@@ -38,6 +36,16 @@ public class CarView extends JFrame implements Observer {
 
     public void repaint() {
         drawPanel.repaint();
+    }
+    
+    @Override
+    public void addCar(String image) {
+        drawPanel.addCar(image);
+    }
+    
+    @Override
+    public void removeCar(){
+        drawPanel.cars.remove(drawPanel.cars.size()-1);
     }
 
     private void initComponents(String title) {

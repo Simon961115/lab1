@@ -140,11 +140,7 @@ public abstract class Vehicle implements Movable {
     public double getY() { //Skickar ut y koordinat
         return y;
     }
-
-    public void setPos(double x,double y) {
-        this.x = x;
-        this.y = y;
-    }
+    
     protected void setPosition(double x, double y){ // Needed for CarTransport, maybe not good?
         this.x = x;
         this.y = y;

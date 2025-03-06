@@ -7,14 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CarController extends JPanel{
-
-
-    private int carPicX = 100;
-    private int carPicY = 60;
-
-    //Timer
-    private final int delay = 50;
-    private Timer timer = new Timer(delay, new TimerListener());
+    
 
     //?
     private static final int X = 800;
@@ -30,12 +23,15 @@ public class CarController extends JPanel{
     JLabel gasLabel = new JLabel("Amount of gas");
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton turboOnButton = new JButton("Turbo on");
+    JButton turboOffButton = new JButton("Turbo off");
+    JButton liftBedButton = new JButton("Lift Bed");
+    JButton lowerBedButton = new JButton("Lower Bed");
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    
+    JButton addCarButton = new JButton("Add car");
+    JButton removeCarButton = new JButton("Remove car");
 
 
 
@@ -44,7 +40,6 @@ public class CarController extends JPanel{
     public CarController(CarPanel panel){
         this.panel = panel;
         this.initComponents("Controller");
-        timer.start();
     }
 
 
@@ -75,6 +70,10 @@ public class CarController extends JPanel{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
+        
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -150,44 +149,21 @@ public class CarController extends JPanel{
                 panel.startEngine();
             }
         });
-
-    }
-
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            if (panel == null) return;
-            for (Vehicle car : panel.cars) {
-                car.move();
-                int x = (int) Math.round(car.getX());
-                int y = (int) Math.round(car.getY());
-
-                // Checks if car is out of bounds, if so, car is flipped,
-                if (    x > 700 - carPicX ||
-                        y > 560 - carPicY ||
-                        x < 0 || y < 0) {
-                    car.turnLeft();
-                    car.turnLeft();
-                    car.move();
-                    x = (int) Math.round(car.getX());
-                    y = (int) Math.round(car.getY());
-                } else if ( car.getClass() == Volvo240.class && !car.getTransported() &&
-                        panel.volvoWorkshop.getCurrentCarsParked() < panel.volvoWorkshop.getMaxCarSpots() &&
-                        panel.volvoWorkshop.getX() - carPicX <= car.getX() && panel.volvoWorkshop.getX() + 101 >= car.getX() &&
-                        panel.volvoWorkshop.getY() - carPicY <= car.getY() && panel.volvoWorkshop.getY() + 96 >= car.getY()) {
-                    car.stopEngine();
-                    car.setPosition(panel.volvoWorkshop.getX(),
-                            panel.volvoWorkshop.getY() - 10 * (1 + panel.volvoWorkshop.getCurrentCarsParked()));
-                    panel.volvoWorkshop.parkCar((Volvo240) car);
-
-                }
-
-                int i = panel.cars.indexOf(car);
-                panel.updateCarPos(x, y,i);
-                // repaint() calls the paintComponent method of the panel
-
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.addCar();
             }
-            panel.update();
-        }
+        });
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeCar();
+            }
+        });
+
     }
+
+    
 
 }
